@@ -4,7 +4,7 @@
 #
 class nagios::params {
 
-  $libdir = $::architecture ? {
+  $libdir = $facts['os']['architecture'] ? {
     'x86_64' => 'lib64',
     'amd64'  => 'lib64',
     'ppc64'  => 'lib64',
@@ -42,13 +42,13 @@ class nagios::params {
     'nagios-plugins-users',
   ]
 
-  case $::operatingsystem {
+  case $facter['os']['name'] {
     'RedHat', 'Fedora', 'CentOS', 'Scientific', 'Amazon': {
       $nrpe_package       = [ 'nrpe', 'nagios-plugins' ]
       $nrpe_service       = 'nrpe'
       $nrpe_user          = 'nrpe'
       $nrpe_group         = 'nrpe'
-      if ( $::operatingsystem != 'Fedora' and versioncmp($::operatingsystemrelease, '7') >= 0 ) {
+      if ( $facter['os']['name'] != 'Fedora' and versioncmp($facts['os']['release']['major'], '7') >= 0 ) {
         $nrpe_pid_file    = hiera('nagios::params::nrpe_pid_file','/run/nrpe/nrpe.pid')
       } else {
         $nrpe_pid_file    = hiera('nagios::params::nrpe_pid_file','/var/run/nrpe/nrpe.pid')

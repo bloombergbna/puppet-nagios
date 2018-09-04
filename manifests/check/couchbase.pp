@@ -5,14 +5,14 @@ class nagios::check::couchbase (
   $couchbase_cbstats        = '/opt/couchbase/bin/cbstats',
   $couchbase_host           = '127.0.0.1',
   $couchbase_port           = '11211',
-  $check_title              = $::nagios::client::host_name,
+  $check_title              = $nagios::client::host_name,
   $servicegroups            = undef,
-  $check_period             = $::nagios::client::service_check_period,
-  $contact_groups           = $::nagios::client::service_contact_groups,
-  $first_notification_delay = $::nagios::client::first_notification_delay,
-  $max_check_attempts       = $::nagios::client::service_max_check_attempts,
-  $notification_period      = $::nagios::client::service_notification_period,
-  $use                      = $::nagios::client::service_use,
+  $check_period             = $nagios::client::service_check_period,
+  $contact_groups           = $nagios::client::service_contact_groups,
+  $first_notification_delay = $nagios::client::first_notification_delay,
+  $max_check_attempts       = $nagios::client::service_max_check_attempts,
+  $notification_period      = $nagios::client::service_notification_period,
+  $use                      = $nagios::client::service_use,
 ) inherits ::nagios::client {
 
   nagios::client::nrpe_plugin { 'check_couchbase':

@@ -25,8 +25,8 @@ class nagios::nagiosgraph (
 ) {
 
   # Get the same value as the server (hack-ish, used in the default template)
-  if $::nagios::server::apache_allowed_from != '' {
-    $apache_allowed_from = $::nagios::server::apache_allowed_from
+  if $nagios::server::apache_allowed_from != '' {
+    $apache_allowed_from = $nagios::server::apache_allowed_from
   } else {
     $apache_allowed_from = []
   }
@@ -74,7 +74,7 @@ class nagios::nagiosgraph (
   }
 
   # With selinux, adjustements are needed for nagiosgraph
-  if $selinux and $::selinux_enforced {
+  if $selinux and $facts['os']['selinux']['enforced'] {
     selinux::audit2allow { 'nagiosgraph':
       source => "puppet:///modules/${module_name}/messages.nagiosgraph",
     }

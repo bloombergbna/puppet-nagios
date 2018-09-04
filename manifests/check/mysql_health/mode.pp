@@ -9,11 +9,11 @@ define nagios::check::mysql_health::mode () {
   $mode_u = regsubst($title,'-','_','G')
 
   # Get the variables we need
-  $check_title    = $::nagios::client::host_name
-  $args           = $::nagios::check::mysql_health::args
-  $modes_enabled  = $::nagios::check::mysql_health::modes_enabled
-  $modes_disabled = $::nagios::check::mysql_health::modes_disabled
-  $ensure         = $::nagios::check::mysql_health::ensure
+  $check_title    = $nagios::client::host_name
+  $args           = $nagios::check::mysql_health::args
+  $modes_enabled  = $nagios::check::mysql_health::modes_enabled
+  $modes_disabled = $nagios::check::mysql_health::modes_disabled
+  $ensure         = $nagios::check::mysql_health::ensure
 
   # Get the args passed to the main class for our mode
   $args_mode = getvar("nagios::check::mysql_health::args_${mode_u}")

@@ -8,15 +8,15 @@ define nagios::check::postgres::custom_query () {
   $query_name = $title
 
   # Get the variables we need
-  $check_title    = $::nagios::client::host_name
-  $args           = $::nagios::check::postgres::args
-  $ensure         = $::nagios::check::postgres::ensure
-  $standby_mode   = $::nagios::check::postgres::standby_mode
-  $plugin         = $::nagios::check::postgres::plugin
-  $custom_queries = $::nagios::check::postgres::custom_queries
-  $server         = $::nagios::client::server
-  $nrpe_command   = $::nagios::params::nrpe_command
-  $nrpe_options   = $::nagios::params::nrpe_options
+  $check_title    = $nagios::client::host_name
+  $args           = $nagios::check::postgres::args
+  $ensure         = $nagios::check::postgres::ensure
+  $standby_mode   = $nagios::check::postgres::standby_mode
+  $plugin         = $nagios::check::postgres::plugin
+  $custom_queries = $nagios::check::postgres::custom_queries
+  $server         = $nagios::client::server
+  $nrpe_command   = $nagios::params::nrpe_command
+  $nrpe_options   = $nagios::params::nrpe_options
 
   # Full nrpe command to run, with default options
   $nrpe = "${nrpe_command} ${nrpe_options}"

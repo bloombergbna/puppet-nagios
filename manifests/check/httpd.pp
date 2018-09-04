@@ -1,14 +1,14 @@
 class nagios::check::httpd (
   $ensure                   = undef,
-  $args                     = $::nagios_check_httpd_args,
-  $check_title              = $::nagios::client::host_name,
+  $args                     = $nagios_check_httpd_args,
+  $check_title              = $nagios::client::host_name,
   $servicegroups            = undef,
-  $check_period             = $::nagios::client::service_check_period,
-  $contact_groups           = $::nagios::client::service_contact_groups,
-  $first_notification_delay = $::nagios::client::first_notification_delay,
-  $max_check_attempts       = $::nagios::client::service_max_check_attempts,
-  $notification_period      = $::nagios::client::service_notification_period,
-  $use                      = $::nagios::client::service_use,
+  $check_period             = $nagios::client::service_check_period,
+  $contact_groups           = $nagios::client::service_contact_groups,
+  $first_notification_delay = $nagios::client::first_notification_delay,
+  $max_check_attempts       = $nagios::client::service_max_check_attempts,
+  $notification_period      = $nagios::client::service_notification_period,
+  $use                      = $nagios::client::service_use,
 ) inherits ::nagios::client {
 
   nagios::service { "check_httpd_${check_title}":

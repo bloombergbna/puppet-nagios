@@ -72,21 +72,21 @@ class nagios::server (
   $perfdata_timeout      = '5',
   # private/resource.cfg for $USERx$ macros (from 1 to 32)
   $user = {
-    '1' => $::nagios::params::plugin_dir,
+    '1' => $nagios::params::plugin_dir,
   },
   # Command and options for all nrpe-based checks
-  $nrpe_command   = $::nagios::params::nrpe_command,
-  $nrpe_options   = $::nagios::params::nrpe_options,
+  $nrpe_command   = $nagios::params::nrpe_command,
+  $nrpe_options   = $nagios::params::nrpe_options,
   # Contacts and Contact Groups
   $admins_members = 'nagiosadmin',
   # Others
   $notify_host_by_email_command_line    = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
   $notify_service_by_email_command_line = '/usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$',
   $timeperiod_workhours = '09:00-17:00',
-  $plugin_dir           = $::nagios::params::plugin_dir,
+  $plugin_dir           = $nagios::params::plugin_dir,
   $plugin_nginx         = false,
   $plugin_xcache        = false,
-  $selinux              = $::selinux,
+  $selinux              = $facts['os']['selinux']['enabled'],
   # Original template entries
   $template_generic_contact = {},
   $template_generic_host    = {},
@@ -966,8 +966,8 @@ class nagios::server (
 
   # With selinux, adjustements are needed for nagiosgraph
   # lint:ignore:quoted_booleans
-  if ( ( $selinux == true and $::selinux_enforced == true ) or
-  ( $selinux == 'true' and $::selinux_enforced == 'true' ) ) {
+  if ( ( $selinux == true and $facts['os']['selinux']['enforced'] == true ) or
+  ( $selinux == 'true' and $facts['os']['selinux']['enforced'] == 'true' ) ) {
     selinux::audit2allow { 'nagios':
       source => "puppet:///modules/${module_name}/messages.nagios",
     }

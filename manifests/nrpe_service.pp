@@ -44,7 +44,7 @@ define nagios::nrpe_service (
     fail("name ${name} cannot contain spaces")
   }
 
-  $host_name = $::nagios::client::host_name
+  $host_name = $nagios::client::host_name
 
   # FIXME: without nagios::client, applying a manifest with only an
   #        nrpe_service fails because it doesn't find Service['nrpe']
@@ -66,7 +66,7 @@ define nagios::nrpe_service (
   nagios_command { "check_nrpe_${name}":
     ensure       => $ensure,
     # -u turns socket timeout into unknowns
-    command_line => "${::nagios::params::nrpe} -u -c check_${name}"
+    command_line => "${nagios::params::nrpe} -u -c check_${name}"
   }
 
   # server-side definition of nagios service to check

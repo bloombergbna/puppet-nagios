@@ -87,10 +87,10 @@ Nagios client specific overrides. See `client.pp` and `check/*.pp` for all of
 the variables which can be manipulated this way. The following :
 
 ```puppet
-nagios::client::config { 'host_address': value => $::ipaddress_eth2 }
+nagios::client::config { 'host_address': value => $facts['ipaddress_eth2'] }
 ```
 
-Will result in having `$::nagios_host_name` get `$ipaddress_eth2` as its value
+Will result in having `$facts['nagios_host_name']` get `$ipaddress_eth2` as its value
 for the entire configuration of the client where it is applied.
 
 Nagios client check override configuration examples :
@@ -105,7 +105,7 @@ can inherit it)  :
 
 ```puppet
 Nagios::Check::Swap { ensure => 'absent' }
-if $::domain == 'example.com' {
+if $facts['networking']['domain'] == 'example.com' {
   Nagios::Check::Cpu { notification_period => 'workhours' }
 }
 ```
@@ -159,13 +159,13 @@ hiera's automatic class parameter lookup) :
 
 ```puppet
 class { '::nagios::client':
-  host_notification_period => $::domain ? {
+  host_notification_period => $facts['networking']['domain'] ? {
     /\.dev$/ => 'workhours',
     default  => '24x7',
   }
   # You will need to use the type "nagios_hostgroup" on the server for
   # all of the possible domain values to create the hostgroups.
-  host_hostgroups => $::domain,
+  host_hostgroups => $facts['networking']['domain'],
 }
 ```
 
@@ -193,7 +193,7 @@ Example :
 
 ```puppet
 # This could go in site.pp, the fact is present only if mysqld is found
-if $::nagios_mysqld {
+if $facts['nagios_mysqld'] {
   mysql_user { 'nagios@localhost':
     ensure        => 'present',
     password_hash => mysql_password('mysupersecretpassword'),

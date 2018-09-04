@@ -1,13 +1,13 @@
 define nagios::check::dir_status (
-  $ensure                   = $::nagios_check_dir_status_ensure,
+  $ensure                   = $nagios_check_dir_status_ensure,
   $args,
-  $servicegroups            = $::nagios_check_dir_status_servicegroups,
-  $check_period             = $::nagios_check_dir_status_check_period,
-  $contact_groups           = $::nagios::client::service_contact_groups,
-  $first_notification_delay = $::nagios::client::first_notification_delay,
-  $max_check_attempts       = $::nagios_check_dir_status_max_check_attempts,
-  $notification_period      = $::nagios_check_dir_status_notification_period,
-  $use                      = $::nagios::client::service_use,
+  $servicegroups            = $nagios_check_dir_status_servicegroups,
+  $check_period             = $nagios_check_dir_status_check_period,
+  $contact_groups           = $nagios::client::service_contact_groups,
+  $first_notification_delay = $nagios::client::first_notification_delay,
+  $max_check_attempts       = $nagios_check_dir_status_max_check_attempts,
+  $notification_period      = $nagios_check_dir_status_notification_period,
+  $use                      = $nagios::client::service_use,
 ) {
 
   if $ensure != 'absent' {
@@ -20,7 +20,7 @@ define nagios::check::dir_status (
     plugin => 'check_dir_status',
   }
 
-  nagios::service { "check_dir_status_${title}_${::nagios::client::host_name}":
+  nagios::service { "check_dir_status_${title}_${nagios::client::host_name}":
     ensure                   => $ensure,
     check_command            => "check_nrpe_dir_status_${title}",
     service_description      => "dir_status_${title}",

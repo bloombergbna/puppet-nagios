@@ -31,18 +31,18 @@ class nagios::check::mysql_health (
 
   # Generic overrides
   if $check_period {
-    Nagios_service { check_period => $::nagios_check_mysql_health_check_period }
+    Nagios_service { check_period => $facts['nagios_check_mysql_health_check_period'] }
   }
   if $first_notification_delay {
-    Nagios_service { first_notification_delay => $::nagios_check_mysql_health_first_notification_delay }
+    Nagios_service { first_notification_delay => $facts['nagios_check_mysql_health_first_notification_delay'] }
   }
   if $notification_period {
-    Nagios_service { notification_period => $::nagios_check_mysql_health_notification_period }
+    Nagios_service { notification_period => $facts['nagios_check_mysql_health_notification_period'] }
   }
 
   # Optional package containing the script
   if $pkg {
-    $pkgname = $::operatingsystem ? {
+    $pkgname = $facts['os']['name'] ? {
       'Gentoo' => 'net-analyzer/nagios-check_mysql_health',
       default  => 'nagios-plugins-mysql_health',
     }

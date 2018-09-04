@@ -95,7 +95,7 @@
 * Create overrideable resources instead of relying on templates.cfg.
 
 #### 2013-12-10 - 0.4.2
-* Add $::nagios_client fact for all nagios client nodes.
+* Add $facts['nagios_client'] fact for all nagios client nodes.
 
 #### 2013-12-10 - 0.4.1
 * Fix variable name in README (Anton Babenko).

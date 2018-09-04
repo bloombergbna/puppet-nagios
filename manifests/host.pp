@@ -23,13 +23,13 @@ define nagios::host (
 
     # Fallback to defaults here, no problems passing empty values for the rest
     $final_address = $address ? {
-        ''      => $::ipaddress,
-        undef   => $::ipaddress,
+        ''      => $facts['networking']['ip'],
+        undef   => $facts['networking']['ip'],
         default => $address,
     }
     $final_notes = $notes ? {
-        ''      => "<table><tr><th>OS</th><td>${::operatingsystem} ${::operatingsystemrelease}</td></tr><tr><th>CPU</th><td>${::physicalprocessorcount} x ${::processor0}</td></tr><tr><th>Architecture</th><td>${::architecture}</td></tr><tr><th>Kernel</th><td>${::kernelrelease}</td></tr><tr><th>Memory</th><td>${::memorysize}</td></tr><tr><th>Swap</th><td>${::swapsize}</td></tr></table>",
-        undef   => "<table><tr><th>OS</th><td>${::operatingsystem} ${::operatingsystemrelease}</td></tr><tr><th>CPU</th><td>${::physicalprocessorcount} x ${::processor0}</td></tr><tr><th>Architecture</th><td>${::architecture}</td></tr><tr><th>Kernel</th><td>${::kernelrelease}</td></tr><tr><th>Memory</th><td>${::memorysize}</td></tr><tr><th>Swap</th><td>${::swapsize}</td></tr></table>",
+        ''      => "<table><tr><th>OS</th><td>${facts['os']['name']} ${facts['os']['release']['major']}</td></tr><tr><th>CPU</th><td>${facts['processors']['physicalcount']} x ${facter['processor0']}</td></tr><tr><th>Architecture</th><td>${facts['os']['architecture']}</td></tr><tr><th>Kernel</th><td>${facts['kernelrelease']}</td></tr><tr><th>Memory</th><td>${facts['memory']['system']['total']}</td></tr><tr><th>Swap</th><td>${facts['memory']['swap']['total']}</td></tr></table>",
+        undef   => "<table><tr><th>OS</th><td>${facts['os']['name']} ${facts['os']['release']['major']}</td></tr><tr><th>CPU</th><td>${facts['processors']['physicalcount']} x ${facter['processor0']}</td></tr><tr><th>Architecture</th><td>${facts['os']['architecture']}</td></tr><tr><th>Kernel</th><td>${facts['kernelrelease']}</td></tr><tr><th>Memory</th><td>${facts['memory']['system']['total']}</td></tr><tr><th>Swap</th><td>${facts['memory']['swap']['total']}</td></tr></table>",
         default => $notes,
     }
     $final_notes_url = $notes_url ? {

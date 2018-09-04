@@ -63,13 +63,13 @@ class nagios::check::postgres (
 
   # Generic overrides
   if $check_period {
-    Nagios_service { check_period => $::nagios_check_postgres_period }
+    Nagios_service { check_period => $facts['nagios_check_postgres_period'] }
   }
   if $first_notification_delay {
-    Nagios_service { first_notification_delay => $::nagios_check_postgres_first_notification_delay }
+    Nagios_service { first_notification_delay => $facts['nagios_check_postgres_first_notification_delay'] }
   }
   if $notification_period {
-    Nagios_service { notification_period => $::nagios_check_postgres_notification_period }
+    Nagios_service { notification_period => $facts['nagios_check_postgres_notification_period'] }
   }
 
   # The check is being executed via sudo
